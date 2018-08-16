@@ -92,19 +92,8 @@ quan_stam_tok$content[1]# Auf einzelnen token zugreifen
 # gibt keine position
 
 # funktion, die position der Übereinstimmung findet
-find_position <- function(v1,v2) {
-  i <-  1
-  j <- 1
-  pos1 <- rep(NA,times=sum(match(v1,v2)))
-  pos2 <- pos1
-  for i in 1:length(v1){
-    for (j in 1:length(v2)) {
-      
-      if(v1[i]==v1[j]){
-       pos1[i] <- i
-       pos2[j] <- j
-      }
-    }
-  }
-}
-getwd()
+
+help(which)
+3+2
+  
+
