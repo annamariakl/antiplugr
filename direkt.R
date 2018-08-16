@@ -92,8 +92,26 @@ quan_stam_tok$content[1]# Auf einzelnen token zugreifen
 # gibt keine position
 
 # funktion, die position der Übereinstimmung findet
+# was macht die which funktion, wenn keins übereinstimmt
+test1 <- c(3,4,5)
+any(test1==6)
+# muss mit any getestet werden
 
-help(which)
-3+2
-  
-
+find.pos <- function (p,o){
+  i<- 1
+  pos_o <- list()
+  while(i<= length(p)){
+    if(any(p[i]== o)){
+      pos_o[[i]] <- which(o==p[i])
+    } else {
+      pos_o[[i]] <-"keine Übereinstimmung mit dem Original"
+    }
+    i <- i+1
+      
+  }
+  return(pos_o)
+}
+# test
+o <- c(4,4,4,3)
+p <- c(5,4,4,4)
+find.pos(p,o)
