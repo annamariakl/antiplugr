@@ -10,20 +10,20 @@
 #Packages------------------------------
 install.packages("quanteda")
 install.packages("tm")
-stitch("direkt.R")
+#stitch("direkt.R")
 #-------------------------------------------------------
 # Test Texte
-zit1 <-  "Nach Köhlmoos belegt 1Kön 12,25-30* eine Geschichtstheologie, 
-die das „Trauma von Samaria und die Katastrophe Jerusalems“ interpretiert und 
-dabei der Reichsteilung eine wichtige Rolle zuweist. In diesem Ereignis liegt der 
-Grund für die Untergänge der beiden Staaten, die sich als „Bruderstaaten“ eigentlich 
-nicht hätten trennen sollen."
+#zit1 <-  "Nach Köhlmoos belegt 1Kön 12,25-30* eine Geschichtstheologie, 
+#die das „Trauma von Samaria und die Katastrophe Jerusalems“ interpretiert und 
+#dabei der Reichsteilung eine wichtige Rolle zuweist. In diesem Ereignis liegt der 
+#Grund für die Untergänge der beiden Staaten, die sich als „Bruderstaaten“ eigentlich 
+#nicht hätten trennen sollen."
 
-orig1 <- "Aus der Textanalyse geht hervor, dass 1Kön 12,25-20* Teil eines
-geschichtstheologischen Systems sind, das dazu dient, das Trauma von Samaria und
-die Katastrophe Jerusalems zu verstehen und zu deuten. Die Reichsteilung spielt dabei 
-als Grund der Unheilsgeschichte Israels eine wichtige Rolle. Es ist die Trennung der 
-beiden Bruderstaaten voneinander, der sie beide in die Katastrophe führt."
+#orig1 <- "Aus der Textanalyse geht hervor, dass 1Kön 12,25-20* Teil eines
+#geschichtstheologischen Systems sind, das dazu dient, das Trauma von Samaria und
+#die Katastrophe Jerusalems zu verstehen und zu deuten. Die Reichsteilung spielt dabei 
+#als Grund der Unheilsgeschichte Israels eine wichtige Rolle. Es ist die Trennung der 
+#beiden Bruderstaaten voneinander, der sie beide in die Katastrophe führt."
 
 
 # Köhlmoos, Melanie: Korrektes Zitieren, zuletzt geprüft am 13.08.2018.
@@ -36,9 +36,11 @@ beiden Bruderstaaten voneinander, der sie beide in die Katastrophe führt."
 #myCorpus_orig
 # sieht jedes wort als dokument: nicht richtig
 
+# Beginn der Funktion-------------------------------------------------------------------
 
 
- directq <- function(zit1,orig1){
+
+directq <- function(zit1,orig1){
 myCorpus_orig <- tm::Corpus(tm::VectorSource(c(zit1,orig1))) # Corpus erstellt
 
 #stamming---------------------
@@ -64,7 +66,15 @@ quan_stam_tok<- quanteda::tokens(my_corpus_cuanteda,remove_punct=T)
 # beides sind Charactervectoren
 #quan_stam_tok$content[1]# Auf einzelnen token zugreifen
 # Funktion finden die Abfolgen in charaktervektoren vergleicht
+position_tokens<- find.pos(quan_stam_tok$content,quan_stam_tok$meta)
+return(position_tokens)
  }
+
+
+
+
+
+
 
 # funktion, die position der Übereinstimmung findet
 # was macht die which funktion, wenn keins übereinstimmt
@@ -89,3 +99,11 @@ find.pos <- function (p,o){
 # test#+o <- c(4,4,4,3)
 #p <- c(5,4,4,4)
 #find.pos(p,o)
+
+# test-----------------------------------------
+orig <- "he go home"
+zit <- "he goes home "
+
+directq(zit,orig)
+#stamming geht nicht richtig
+
