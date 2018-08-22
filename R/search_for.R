@@ -6,9 +6,12 @@
 #' @param sen Sentence to be used to search in the text.
 #' @param exact If you search for the exact sentence, the default is FALSE and the
 #' cosine distance is used as similarity measurement.
+#' @param cos_sim Similarity parameter of the cosine distance. The output contains
+#' sentences which have cosine similarity greater or equal 'cos_sim'. The default
+#' is 0.4.
 #'
 
-search_for <- function(x, sen, exact = FALSE, cos_sim = 0.7){
+search_for <- function(x, sen, exact = FALSE, cos_sim = 0.4){
 
   # read in text with pdf_text() from the pdftools package
   text <- pdftools::pdf_text(x)
@@ -25,14 +28,15 @@ search_for <- function(x, sen, exact = FALSE, cos_sim = 0.7){
   text_sen <- gsub("\\s+"," ",tok2)
 
   # if we are searching for the exact similar sentence
-  if (exact = TRUE) {
+  if (exact == TRUE) {
     sen_loc <- lapply(sen, grep, text_sen)
 
     # prepare the output
     sen_loc_un <- unlist(sen_loc)
     pages <- findInterval(sen_loc_un, c(1, sen_nums))
-    output <- tibble::tibble(sentence = rep(sen, sapply(keyword_line_loc, length)),
-                             page = pages, sen_num = sen_loc_un)
+    sen_num <- as.integer(sen_loc_un - sen_nums[pages - 1])
+    output <- tibble::tibble(match = rep("perfect match", sapply(sen_loc, length)),
+                             page = pages, sen_num = sen_num)
 
     return(output)
 
@@ -48,18 +52,21 @@ search_for <- function(x, sen, exact = FALSE, cos_sim = 0.7){
                                                       stopwords=TRUE))
     text_dtm <- as.matrix(text_dtm)
 
-    # comparing with cosine distance
+    # comparing with cosine similarity
     text_sim <- apply(text_dtm[-nrow(text_dtm), ], 1,
                       lsa::cosine, text_dtm[nrow(text_dtm), ])
 
+    # select the sentences with a cosine similarity greater or equal 'cos_sim'
+    sim_select <- text_sim[which(text_sim >= cos_sim)]
+
     # prepare the output
-    pages <- findInterval(keyword_line, c(1, sen_nums))
-    output <- tibble::tibble(keyword = rep(keyword, sapply(keyword_line_loc,
-                            length)), page_num = pages, line_num = keyword_line,
-                            line_text = lines_sel, token_text = token_results_text)
+    sim_num <- as.integer(names(sim_select))
+    pages <- findInterval(sim_num, c(1, sen_nums))
+    sen_num <- as.integer(sim_num - sen_nums[pages - 1])
+    output <- tibble::tibble(cos_sim = sim_select, page = pages,
+                             sen_num = sen_num)
     return(output)
 
   }
-
-
 }
+
