@@ -2,16 +2,15 @@
 #'
 #'
 #'
-#' @param x File path of the PDF.
+#' @param x File name/path of the PDF.
 #' @param sen Sentence to be used to search in the text.
 #' @param exact If you search for the exact sentence, the default is FALSE and the
 #' cosine distance is used as similarity measurement.
 #' @param cos_sim Similarity parameter of the cosine distance. The output contains
 #' sentences which have cosine similarity greater or equal 'cos_sim'. The default
-#' is 0.4.
+#' is 0.5.
 #'
-
-search_for <- function(x, sen, exact = FALSE, cos_sim = 0.4){
+search_for <- function(x, sen, exact = FALSE, cos_sim = 0.5){
 
   # read in text with pdf_text() from the pdftools package
   text <- pdftools::pdf_text(x)
@@ -25,7 +24,7 @@ search_for <- function(x, sen, exact = FALSE, cos_sim = 0.4){
   sen_nums <- cumsum(lapply(text_sen, length))
 
   # remove internal white space
-  text_sen <- gsub("\\s+"," ",tok2)
+  text_sen <- gsub("\\s+"," ", text_sen)
 
   # if we are searching for the exact similar sentence
   if (exact == TRUE) {
@@ -34,7 +33,8 @@ search_for <- function(x, sen, exact = FALSE, cos_sim = 0.4){
     # prepare the output
     sen_loc_un <- unlist(sen_loc)
     pages <- findInterval(sen_loc_un, c(1, sen_nums))
-    sen_num <- as.integer(sen_loc_un - sen_nums[pages - 1])
+    sen_nums2 <- c(0, sen_nums)
+    sen_num <- as.integer(sen_loc_un - sen_nums2[pages])
     output <- tibble::tibble(match = rep("perfect match", sapply(sen_loc, length)),
                              page = pages, sen_num = sen_num)
 
@@ -62,11 +62,13 @@ search_for <- function(x, sen, exact = FALSE, cos_sim = 0.4){
     # prepare the output
     sim_num <- as.integer(names(sim_select))
     pages <- findInterval(sim_num, c(1, sen_nums))
-    sen_num <- as.integer(sim_num - sen_nums[pages - 1])
+    sen_nums2 <- c(0, sen_nums)
+    sen_num <- as.integer(sim_num - sen_nums2[pages])
     output <- tibble::tibble(cos_sim = sim_select, page = pages,
                              sen_num = sen_num)
     return(output)
 
   }
 }
+
 
