@@ -1,15 +1,37 @@
 #' Compare a document to another document
 #'
-#' Compares a document to another document to find plagiarism.
+#' Compares a document to another document to find similar sentences. The cosine
+#' similarity is used to compare both documents.
 #'
 #' @param x File name/path of the PDF.
-#' @param source File name/path of the source which should be
-#' compared to the document x (source has to be in PDF format).
+#' @param source File name/path of the source which should be compared to the
+#' document x (source has to be in PDF format).
 #' @param cos_sim Similarity parameter of the cosine distance. The output contains
 #' sentences which have cosine similarity greater or equal 'cos_sim'. The default
 #' is 0.6.
 #'
+#' @return A tibble data frame that contains the measured cosine similarity, the
+#' similar sentence of the document x and the location of the match, from both
+#' documents the page number and the sentence number.
 #'
+#' @importFrom pdftools pdf_text
+#' @importFrom quanteda tokens tokens_tolower
+#' @importFrom tm VCorpus VectorSource DocumentTermMatrix stemDocument
+#' @importFrom lsa cosine
+#'
+#' @examples
+#' # PDF from Book Reports,
+#' # URL: https://www.bookreports.info/hansel-and-gretel-summary/ a bit modified.
+#' file1 <- system.file('pdf', 'summary_hansel_and_gretel.pdf', package = 'antiplugr')
+#'
+#' # PDF from Short Story America,
+#' # URL: http://www.shortstoryamerica.com/pdf_classics/grimm_hanse_and_gretel.pdf
+#' file2 <- system.file('pdf', 'grimm_hanse_and_gretel.pdf', package = 'antiplugr')
+#'
+#' compare(file1, file2)
+#'
+#' @export
+
 compare <- function(x, source, cos_sim = 0.6){
 
   # read documents
@@ -17,7 +39,7 @@ compare <- function(x, source, cos_sim = 0.6){
   text_documents <- sapply(documents, pdftools::pdf_text)
 
   # stem the documents
-  documents_stem <- lapply(text_documents, stemDocument)
+  documents_stem <- lapply(text_documents, tm::stemDocument)
 
   # calculate the similarity for the whole documents
 
