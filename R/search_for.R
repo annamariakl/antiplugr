@@ -1,6 +1,6 @@
 #' Search for similar sentences
 #'
-#'
+#' \code{search_for} is used to search for similar or exact sentences in a PDF.
 #'
 #' @param x File name/path of the PDF.
 #' @param sen Sentence to be used to search in the text.
@@ -10,6 +10,33 @@
 #' sentences which have cosine similarity greater or equal 'cos_sim'. The default
 #' is 0.5.
 #'
+#' @return A tibble data frame that contains the measured cosine similarity and
+#' the location of the match, the page number and the sentence number.
+#'
+#' @importFrom pdftools pdf_text
+#' @importFrom quanteda tokens
+#' @importFrom tm VCorpus VectorSource DocumentTermMatrix
+#' @importFrom lsa cosine
+#'
+#' @examples
+#' # PDF from Book Reports,
+#' # URL: https://www.bookreports.info/hansel-and-gretel-summary/
+#' file <- system.file('pdf', 'summary_hansel_and_gretel.pdf', package = 'antiplugr')
+#'
+#' # a similar sentence from 'grimm_hanse_and_gretel.pdf' from Short Story America,
+#' # URL: http://www.shortstoryamerica.com/pdf_classics/grimm_hanse_and_gretel.pdf
+#' sen_1 <- "When four weeks had passed and Hansel was still thin, impatience
+#' overcame her, and she would wait no longer."
+#'
+#' # an exact sentences
+#' sen_2 <- "When four weeks had passed and Hansel was still thin, the witch
+#' got tired."
+#'
+#' search_for(file, sen_1)
+#' search_for(file, sen_2, exact = TRUE)
+#'
+#' @export
+
 search_for <- function(x, sen, exact = FALSE, cos_sim = 0.5){
 
   # read in text with pdf_text() from the pdftools package
