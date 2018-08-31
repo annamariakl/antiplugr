@@ -26,12 +26,3 @@ test_that("correct dimension", {
   expect_equal(dim(compare(file1, file2)), c(5, 6))
 })
 
-test_that("correct entries", {
-  file1 <- system.file('pdf', 'summary_hansel_and_gretel.pdf', package = 'antiplugr')
-  file2 <- system.file('pdf', 'grimm_hanse_and_gretel.pdf', package = 'antiplugr')
-  sen1 <- "When four weeks had passed and Hansel was still thin, impatience overcame
-  her, and she would wait no longer."
-  expect_equal(search_for(x = file1, sen = sen1)[1, 3], 19)
-  expect_equal(compare(file1, file2)[1, 5], 5)
-  expect_equal(compare(file1, file2)[3, 6], 16)
-})

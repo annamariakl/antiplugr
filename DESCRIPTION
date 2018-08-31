@@ -2,11 +2,7 @@ Package: antiplugr
 Type: Package
 Title: Detecting plagiarism via text mining tools.
 Version: 0.1.0
-Authors@R: c(
-  person("Anna-Maria", "Kloidt", email = "kannamaria@gmx.de", 
-         role = c("cre", "aut")),
-  person("Maria Claire", "Reiß", email = "mariaclaire.reiss@stud.uni-goettingen.de", 
-         role = c("cre", "aut")))
+Author: Anna-Maria Kloidt and Maria Claire Reiß
 Maintainer: Anna-Maria Kloidt <kannamaria@gmx.de>
 Description: This package includes functions which try to detect plagiarism. 
   The functions can compare PDFs and calculate the similarity and also can 
