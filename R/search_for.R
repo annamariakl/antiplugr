@@ -26,12 +26,10 @@
 #'
 #' # a similar sentence from 'grimm_hanse_and_gretel.pdf' from Short Story America,
 #' # URL: http://www.shortstoryamerica.com/pdf_classics/grimm_hanse_and_gretel.pdf
-#' sen_1 <- "When four weeks had passed and Hansel was still thin, impatience
-#' overcame her, and she would wait no longer."
+#' sen_1 <- "When four weeks had passed and Hansel was still thin, impatience overcame her, and she would wait no longer."
 #'
 #' # an exact sentences
-#' sen_2 <- "When four weeks had passed and Hansel was still thin, the witch
-#' got tired."
+#' sen_2 <- "When four weeks had passed and Hansel was still thin, the witch got tired."
 #'
 #' search_for(file, sen_1)
 #' search_for(file, sen_2, exact = TRUE)
