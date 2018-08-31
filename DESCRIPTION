@@ -1,0 +1,27 @@
+Package: antiplugr
+Type: Package
+Title: Detecting plagiarism via text mining tools.
+Version: 0.1.0
+Authors@R: c(
+  person("Anna-Maria", "Kloidt", email = "kannamaria@gmx.de", 
+         role = c("cre", "aut")),
+  person("Maria Claire", "Reiß", email = "mariaclaire.reiss@stud.uni-goettingen.de", 
+         role = c("cre", "aut")))
+Maintainer: Anna-Maria Kloidt <kannamaria@gmx.de>
+Description: This package includes functions which try to detect plagiarism. 
+  The functions can compare PDFs and calculate the similarity and also can 
+  search for specific sentences in a document.
+Depends:
+    R (>= 3.3.0)
+Imports:
+    lsa,
+    pdftools,
+    quanteda,
+    tibble,
+    tm,
+Suggests:
+    testthat
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
