@@ -17,6 +17,7 @@
 #' @importFrom quanteda tokens
 #' @importFrom tm VCorpus VectorSource DocumentTermMatrix
 #' @importFrom lsa cosine
+#' @importFrom tibble tibble
 #'
 #' @examples
 #' # PDF from Book Reports,
