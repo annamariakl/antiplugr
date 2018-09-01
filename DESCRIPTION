@@ -1,6 +1,6 @@
 Package: antiplugr
 Type: Package
-Title: Detecting plagiarism via text mining tools.
+Title: Detecting plagiarism via text mining tools
 Version: 0.1.0
 Author: Anna-Maria Kloidt and Maria Claire Reiß
 Maintainer: Anna-Maria Kloidt <kannamaria@gmx.de>
