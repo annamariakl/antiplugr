@@ -81,12 +81,10 @@ compare <- function(x, source, cos_sim = 0.6){
   documents_sen <- as.vector(sapply(documents_sen_rem, length))
 
   # comparing with cosine similarity
-  documents_sim <- list()
-  for(i in 1:documents_sen[1]){
-    documents_sim[[i]] <- apply(documents_dtm[-(1:documents_sen[1]), ], 1,
-                                lsa::cosine, documents_dtm[i, ])
-  }
-  ## muss noch eleganter gelöst werden, noch viel zu langsam!!
+  documents_sim <- lapply(as.list(1:documents_sen[1]), function(x){
+    apply(documents_dtm[-(1:documents_sen[1]), ], 1,
+          lsa::cosine, documents_dtm[x, ])
+  })
 
   # select the sentences with a cosine similarity greater or equal 'cos_sim'
   sim_select <- lapply(documents_sim, function(x) {
