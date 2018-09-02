@@ -42,9 +42,6 @@ compare <- function(x, source, cos_sim = 0.6){
   # stem the documents
   documents_stem <- lapply(text_documents, tm::stemDocument)
 
-  # calculate the similarity for the whole documents
-
-
   # tokenize the documents
   documents_sen <- lapply(documents_stem, quanteda::tokens, what = "sentence",
                           remove_numbers = TRUE, remove_punc = TRUE,
