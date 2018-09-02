@@ -34,7 +34,7 @@ file <- system.file('pdf', 'summary_hansel_and_gretel.pdf', package = 'antiplugr
 # URL: http://www.shortstoryamerica.com/pdf_classics/grimm_hanse_and_gretel.pdf
 sen_1 <- "When four weeks had passed and Hansel was still thin, impatience overcame her, and she would wait no longer."
 
-# an exact sentences
+# an exact sentence
 sen_2 <- "When four weeks had passed and Hansel was still thin, the witch got tired."
 
 search_for(file, sen_1)
