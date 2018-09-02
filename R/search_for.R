@@ -28,7 +28,7 @@
 #' # URL: http://www.shortstoryamerica.com/pdf_classics/grimm_hanse_and_gretel.pdf
 #' sen_1 <- "When four weeks had passed and Hansel was still thin, impatience overcame her, and she would wait no longer."
 #'
-#' # an exact sentences
+#' # an exact sentence
 #' sen_2 <- "When four weeks had passed and Hansel was still thin, the witch got tired."
 #'
 #' search_for(file, sen_1)
@@ -45,6 +45,9 @@ search_for <- function(x, sen, exact = FALSE, cos_sim = 0.5){
   text_sen <- quanteda::tokens(text, what = "sentence", remove_numbers = TRUE,
                                remove_punc = TRUE, remove_symbols = TRUE,
                                remove_hyphens = TRUE, remove_separators = TRUE)
+
+  # lower the letters of the text
+  text_sen <- quanteda::tokens_tolower(text_sen)
 
   # assignment for ouput
   sen_nums <- cumsum(lapply(text_sen, length))
